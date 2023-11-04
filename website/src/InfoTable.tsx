@@ -26,14 +26,36 @@ interface Data {
 const InfoTable: React.FC = () => {
   const [data, setData] = useState<Data[]>([]);
 
-  const fetchData = async () => {
-    const result = await axios.get(
-      // "https://jsonplaceholder.typicode.com/users"
-      "attacker:8080/info"
-    );
-    setData(result.data);
-  };
+  // const fetchData = async () => {
+  //   const result = await axios.get(
+  //     // "https://jsonplaceholder.typicode.com/users"
+  //     "http://attacker:8080/info", {
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   });
+  //   setData(result.data);
+  // };
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:7000/info', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   useEffect(() => {
     fetchData();
   }, []);

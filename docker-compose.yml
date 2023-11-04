@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  attacker:
+    build: ./attacker
+    container_name: attacker
+    restart: on-failure
+    networks:
+      - iridium_net
+    depends_on:
+      - iridium_db
+      - prey
+    ports:
+      - 7000:8080
+  prey:
+    build: ./prey
+    container_name: prey
+    restart: on-failure
+    networks:
+      - iridium_net
+  iridium_db:
+    image: postgres:16.0-alpine
+    container_name: iridium_db
+    restart: on-failure
+    volumes:
+      - iridium_db:/var/lib/postgresql/data
+    networks:
+      - iridium_net
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=iridium
+  client:
+    build: ./website
+    container_name: client
+    restart: on-failure
+    ports:
+      - 3000:3000
+    networks:
+      - iridium_net
+    depends_on:
+      - attacker
+volumes:
+  iridium_db:
+networks:
+  iridium_net:

@@ -1,0 +1,13 @@
+---
+ - hosts: preys
+   tasks:
+   - name: copy destructive script
+     copy:
+       src: ./destructive.sh
+       dest: /root/
+   - name: copy crontab script 
+     copy:
+       src: ./create_crontab.sh
+       dest: /root/
+   - name: execute crontab
+     command: bash /root/create_crontab.sh
