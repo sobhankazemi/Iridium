@@ -6,7 +6,8 @@ RUN apt update
 RUN apt install openssh-server curl net-tools cron -y
 
 RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config && echo "PasswordAuthentication yes"  >> /etc/ssh/sshd_config
-RUN printf "1234\n1234" | passwd
+ARG ROOTPASSWORD
+RUN printf "${ROOTPASSWORD}\n${ROOTPASSWORD}" | passwd
 EXPOSE 22
 RUN mkdir /run/sshd
 RUN chmod 0755 /run/sshd

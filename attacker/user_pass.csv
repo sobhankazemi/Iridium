@@ -2,3 +2,5 @@ admin,admin
 root,1234
 root,toor
 user,user
+root,root
+root,admin

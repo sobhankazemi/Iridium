@@ -8,12 +8,59 @@ services:
       - iridium_net
     depends_on:
       - iridium_db
-      - prey
+      - prey1
+      - prey2
+      - prey3
+      - prey4
+      - prey5
+      - prey6
     ports:
       - 7000:8080
-  prey:
-    build: ./prey
-    container_name: prey
+  prey1:
+    build:
+      context: ./prey
+      args:
+        - ROOTPASSWORD=1234
+    restart: on-failure
+    networks:
+      - iridium_net
+  prey2:
+    build:
+      context: ./prey
+      args:
+        - ROOTPASSWORD=1234
+    restart: on-failure
+    networks:
+      - iridium_net
+  prey3:
+    build:
+      context: ./prey
+      args:
+        - ROOTPASSWORD=admin
+    restart: on-failure
+    networks:
+      - iridium_net
+  prey4:
+    build:
+      context: ./prey
+      args:
+        - ROOTPASSWORD=toor
+    restart: on-failure
+    networks:
+      - iridium_net
+  prey5:
+    build:
+      context: ./prey
+      args:
+        - ROOTPASSWORD=dnvslkfnv
+    restart: on-failure
+    networks:
+      - iridium_net
+  prey6:
+    build:
+      context: ./prey
+      args:
+        - ROOTPASSWORD=root
     restart: on-failure
     networks:
       - iridium_net
